@@ -11,3 +11,9 @@ class MissCannibals(Problem):
 
 if __name__ == '__main__':
     mc = MissCannibals(M=3, C=3)
+    #print(mc.actions((3, 2, True))) # Test your code as you develop! This should return  ['CC', 'C', 'M']
+ 
+    path = depth_first_graph_search(mc).solution()
+    print(path)
+    path = breadth_first_graph_search(mc).solution()
+    print(path)
