@@ -84,6 +84,8 @@ class MissCannibals(Problem):
 if __name__ == '__main__':
     mc = MissCannibals(M=3, C=3)
     
+    # i tried to only make valid moves, assumed states are currently valid
+    # figured if we only make valid moves current state cannot be invalid
     print(mc.actions((3, 3, True)))  # ['sCC','C','MC'] - correct
     print()
     print(mc.actions((3, 3, False))) # [] - correct
