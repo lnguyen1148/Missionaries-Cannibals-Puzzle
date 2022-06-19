@@ -33,6 +33,9 @@ class MissCannibals(Problem):
                     new_state[0] += 1
                 if letter == "C":
                     new_state[1] += 1
+
+        # move the boat
+        new_state[2] = not new_state[2]
             
         return tuple(new_state)
 
@@ -50,10 +53,11 @@ class MissCannibals(Problem):
         # print("ml cl mr cr onLeft")
         # print(m_left, c_left, m_right, c_right, state[2], sep="  ")
 
+        # boat is on the left
         if state[2]:
-            if m_left >= c_left + 2 and m_left >= 2:
+            if (m_left >= c_left + 2 and m_left >= 2) or m_left == 2:
                 valid_actions.append("MM")
-            if m_left >= c_left + 1 and m_left >= 1:
+            if (m_left >= c_left + 1 and m_left >= 1) or m_left == 1:
                 valid_actions.append("M")
             if (m_right >= c_right + 2 or m_right == 0) and c_left >= 2:
                 valid_actions.append("CC")
@@ -80,15 +84,30 @@ class MissCannibals(Problem):
 if __name__ == '__main__':
     mc = MissCannibals(M=3, C=3)
     
-    print(mc.actions((3, 2, True)))  # ['CC', 'C', 'M']
+    print(mc.actions((3, 3, True)))  # ['sCC','C','MC'] - correct
     print()
-    print(mc.actions((2, 2, False))) # ['M', 'MC']
+    print(mc.actions((3, 3, False))) # [] - correct
     print()
-    print(mc.actions((1, 1, False))) # ['MM', 'MC']
+    print(mc.actions((3, 2, True)))  # ['CC','C','M']  - correct
     print()
-    print(mc.actions((1, 1, False))) # ['MM', 'MC']
+    print(mc.actions((3, 2, False))) # ['C'] - correct
     print()
-    print(mc.actions((0, 2, True)))  # ['CC', 'C']
+    print(mc.actions((2, 2, True))) # ['MC', 'MM'] - correct
+    print()
+    print(mc.actions((2, 2, False))) # ['MC', 'M'] - correct 
+    print()
+    print(mc.actions((2, 1, True))) # ['MM', 'M'] - correct
+    print()
+    print(mc.actions((2, 1, False))) # ['C', 'M', 'MC'] - maybe
+    print()
+    print(mc.actions((1, 1, True))) # ['MC', 'M'] - correct
+    print()
+    print(mc.actions((1, 1, False))) # ['MM', 'MC'] - correct
+    print()
+    print(mc.actions((1, 0, True))) # ['M'] - correct
+    print()
+    print(mc.actions((1, 0, False))) # ['MM', 'C'] - correct
+    print()
 
     path = depth_first_graph_search(mc).solution()
     print(path)
