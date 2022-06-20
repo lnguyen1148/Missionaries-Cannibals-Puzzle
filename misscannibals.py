@@ -9,7 +9,7 @@ class MissCannibals(Problem):
 
 
     def goal_test(self, state):
-        """Return bool of if state is the goal state"""
+        """Return bool of if current state is the goal state."""
 
         return state == self.goal
 
@@ -80,31 +80,6 @@ class MissCannibals(Problem):
 if __name__ == '__main__':
     mc = MissCannibals(M=3, C=3)
     
-    print(mc.actions((3, 3, True)))  # ['sCC','C','MC'] - correct
-    print()
-    print(mc.actions((3, 3, False))) # [] - correct
-    print()
-    print(mc.actions((3, 2, True)))  # ['CC','C','M']  - correct
-    print()
-    print(mc.actions((3, 2, False))) # ['C'] - correct
-    print()
-    print(mc.actions((2, 2, True))) # ['MC', 'MM'] - correct
-    print()
-    print(mc.actions((2, 2, False))) # ['MC', 'M'] - correct 
-    print()
-    print(mc.actions((1, 1, True))) # ['MC', 'M'] - correct
-    print()
-    print(mc.actions((1, 1, False))) # ['MM', 'MC'] - correct
-    print()
-    print(mc.actions((3, 1, True))) # ['C', 'MM'] - correct
-    print()
-    print(mc.actions((3, 1, False))) # ['CC', 'C'] - correct
-    print()
-    print(mc.actions((3, 0, True))) # [] - correct
-    print()
-    print(mc.actions((3, 0, False))) # ['CC', 'C'] - correct
-    print()
-
     path = depth_first_graph_search(mc).solution()
     print(path)
     path = breadth_first_graph_search(mc).solution()
