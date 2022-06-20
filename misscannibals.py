@@ -9,7 +9,7 @@ class MissCannibals(Problem):
 
 
     def goal_test(self, state):
-        """Return bool of if state is the goal state"""
+        """Return bool of if current state is the goal state."""
 
         return state == self.goal
 
@@ -49,15 +49,11 @@ class MissCannibals(Problem):
         m_right = self.M - m_left
         c_right = self.C - c_left
 
-        # for testing
-        # print("ml cl mr cr onLeft")
-        # print(m_left, c_left, m_right, c_right, state[2], sep="  ")
-
         # boat is on the left
         if state[2]:
-            if (m_left >= c_left + 2 and m_left >= 2) or m_left == 2:
+            if ((m_left >= c_left + 2 and m_left >= 2) or m_left == 2) and m_right + 2 >= c_right:
                 valid_actions.append("MM")
-            if (m_left >= c_left + 1 and m_left >= 1) or m_left == 1:
+            if ((m_left >= c_left + 1 and m_left >= 1) or m_left == 1) and m_right + 1 >= c_right:
                 valid_actions.append("M")
             if (m_right >= c_right + 2 or m_right == 0) and c_left >= 2:
                 valid_actions.append("CC")
@@ -67,9 +63,9 @@ class MissCannibals(Problem):
                 valid_actions.append("MC")
         # boat is on the right side
         else:
-            if (m_right >= c_right + 2 or m_right == 2) and m_right >= 2:
+            if ((m_right >= c_right + 2 or m_right == 2) and m_right >= 2) and m_left + 2 >= c_left:
                 valid_actions.append("MM")
-            if (m_right >= c_right + 1 or m_right == 1) and m_right >= 1:
+            if ((m_right >= c_right + 1 or m_right == 1) and m_right >= 1) and m_left + 1 >= c_left:
                 valid_actions.append("M")
             if (m_left >= c_left + 2 or m_left == 0) and c_right >= 2:
                 valid_actions.append("CC")
@@ -84,33 +80,6 @@ class MissCannibals(Problem):
 if __name__ == '__main__':
     mc = MissCannibals(M=3, C=3)
     
-    # i tried to only make valid moves, assumed states are currently valid
-    # figured if we only make valid moves current state cannot be invalid
-    print(mc.actions((3, 3, True)))  # ['sCC','C','MC'] - correct
-    print()
-    print(mc.actions((3, 3, False))) # [] - correct
-    print()
-    print(mc.actions((3, 2, True)))  # ['CC','C','M']  - correct
-    print()
-    print(mc.actions((3, 2, False))) # ['C'] - correct
-    print()
-    print(mc.actions((2, 2, True))) # ['MC', 'MM'] - correct
-    print()
-    print(mc.actions((2, 2, False))) # ['MC', 'M'] - correct 
-    print()
-    print(mc.actions((2, 1, True))) # ['MM', 'M'] - correct
-    print()
-    print(mc.actions((2, 1, False))) # ['C', 'M', 'MC'] - maybe
-    print()
-    print(mc.actions((1, 1, True))) # ['MC', 'M'] - correct
-    print()
-    print(mc.actions((1, 1, False))) # ['MM', 'MC'] - correct
-    print()
-    print(mc.actions((1, 0, True))) # ['M'] - correct
-    print()
-    print(mc.actions((1, 0, False))) # ['MM', 'C'] - correct
-    print()
-
     path = depth_first_graph_search(mc).solution()
     print(path)
     path = breadth_first_graph_search(mc).solution()
