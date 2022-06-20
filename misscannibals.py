@@ -51,9 +51,9 @@ class MissCannibals(Problem):
 
         # boat is on the left
         if state[2]:
-            if (m_left >= c_left + 2 and m_left >= 2) or m_left == 2:
+            if ((m_left >= c_left + 2 and m_left >= 2) or m_left == 2) and m_right + 2 >= c_right:
                 valid_actions.append("MM")
-            if (m_left >= c_left + 1 and m_left >= 1) or m_left == 1:
+            if ((m_left >= c_left + 1 and m_left >= 1) or m_left == 1) and m_right + 1 >= c_right:
                 valid_actions.append("M")
             if (m_right >= c_right + 2 or m_right == 0) and c_left >= 2:
                 valid_actions.append("CC")
@@ -63,9 +63,9 @@ class MissCannibals(Problem):
                 valid_actions.append("MC")
         # boat is on the right side
         else:
-            if (m_right >= c_right + 2 or m_right == 2) and m_right >= 2:
+            if ((m_right >= c_right + 2 or m_right == 2) and m_right >= 2) and m_left + 2 >= c_left:
                 valid_actions.append("MM")
-            if (m_right >= c_right + 1 or m_right == 1) and m_right >= 1:
+            if ((m_right >= c_right + 1 or m_right == 1) and m_right >= 1) and m_left + 1 >= c_left:
                 valid_actions.append("M")
             if (m_left >= c_left + 2 or m_left == 0) and c_right >= 2:
                 valid_actions.append("CC")
@@ -95,12 +95,12 @@ if __name__ == '__main__':
     print(mc.actions((1, 1, True))) # ['MC', 'M'] - correct
     print()
     print(mc.actions((1, 1, False))) # ['MM', 'MC'] - correct
-    print("Linh removed invalid states and added more valid states to test")
-    print(mc.actions((3, 1, True))) # ['C', 'MM'] - incorrect
+    print()
+    print(mc.actions((3, 1, True))) # ['C', 'MM'] - correct
     print()
     print(mc.actions((3, 1, False))) # ['CC', 'C'] - correct
     print()
-    print(mc.actions((3, 0, True))) # [] - incorrect
+    print(mc.actions((3, 0, True))) # [] - correct
     print()
     print(mc.actions((3, 0, False))) # ['CC', 'C'] - correct
     print()
